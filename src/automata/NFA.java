@@ -6,12 +6,14 @@ import java.util.Map;
 public class NFA {
 
     private final String name;
+    private final List<String> alphabet;
     private final Map<State, Map<String, List<State>>> graph;
     private final State initialState;
     private final List<State> finalStates;
 
-    public NFA(String name, Map<State, Map<String, List<State>>> graph, State initialState, List<State> finalStates) {
+    public NFA(String name, List<String> alphabet, Map<State, Map<String, List<State>>> graph, State initialState, List<State> finalStates) {
         this.name = name;
+        this.alphabet = alphabet;
         this.graph = graph;
         this.finalStates = finalStates;
         this.initialState = initialState;
