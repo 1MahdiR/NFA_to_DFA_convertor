@@ -43,18 +43,18 @@ public class test_1 {
         System.out.println(my_dfa);
 
         System.out.println("does accept ''?");
-        System.out.println((my_dfa.doesAcceptString("")));
+        System.out.println((my_dfa.doesAcceptString(""))); // true
 
         System.out.println("does accept 'a'?");
-        System.out.println((my_dfa.doesAcceptString("a")));
+        System.out.println((my_dfa.doesAcceptString("a"))); // false
 
         System.out.println("does accept 'aa'?");
-        System.out.println((my_dfa.doesAcceptString("aa")));
+        System.out.println((my_dfa.doesAcceptString("aa"))); // true
 
         System.out.println("does accept 'aaa'?");
-        System.out.println((my_dfa.doesAcceptString("aaa")));
+        System.out.println((my_dfa.doesAcceptString("aaa"))); // true
 
         System.out.println("does accept 'aaaa'?");
-        System.out.println((my_dfa.doesAcceptString("aaaa")));
+        System.out.println((my_dfa.doesAcceptString("aaaa"))); // true
     }
 }
