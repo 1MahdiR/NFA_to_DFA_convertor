@@ -34,8 +34,15 @@ public class NFA {
                 if (recursiveFunction(restOf_w, item))
                     return true;
             }
+        }
+        else if (currentState_edges.containsKey("lambda")) {
 
-            return false;
+            List<State> possible_states = currentState_edges.get("lambda");
+
+            for (State item:possible_states) {
+                if (recursiveFunction(restOf_w, item))
+                    return true;
+            }
         }
 
         return false;
