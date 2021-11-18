@@ -17,6 +17,32 @@ public class NFA {
         this.initialState = initialState;
     }
 
+    private boolean recursiveFunction(String w, State currentState) {
+
+        if (w.isEmpty())
+            return this.finalStates.contains(currentState);
+
+        String target_edge = Character.toString(w.charAt(0));
+        String restOf_w = w.substring(1);
+        Map<String, List<State>> currentState_edges = this.graph.get(currentState);
+
+        if (currentState_edges.containsKey(target_edge)) {
+
+            List<State> possible_states = currentState_edges.get(target_edge);
+
+            for (State item:possible_states) {
+                if (recursiveFunction(restOf_w, item))
+                    return true;
+            }
+
+            return false;
+        }
+
+        return false;
+    }
+
+    public boolean doesAcceptString(String w) { return recursiveFunction(w, this.initialState); }
+
     @Override
     public String toString() {
 
