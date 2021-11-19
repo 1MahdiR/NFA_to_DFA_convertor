@@ -19,6 +19,9 @@ public class test_1 {
         System.out.println(st2);
         System.out.println(st3);
 
+        List<String> alphabet = new ArrayList<>();
+        alphabet.add("a");
+
         Map<State, Map<String, State>> graph = new HashMap<>();
         Map<String, State> q0_edges = new HashMap<>();
         Map<String, State> q1_edges = new HashMap<>();
@@ -38,7 +41,7 @@ public class test_1 {
 
         System.out.println(graph);
 
-        DFA my_dfa = new DFA("my_dfa", graph, st1, finals);
+        DFA my_dfa = new DFA("my_dfa", alphabet, graph, st1, finals);
 
         System.out.println(my_dfa);
 

@@ -16,6 +16,10 @@ public class test_6 {
         State st1 = new State("q1");
         State st2 = new State("q2");
 
+        List<String> alphabet = new ArrayList<>();
+        alphabet.add("a");
+        alphabet.add("b");
+
         Map<State, Map<String, List<State>>> graph = new HashMap<>();
         Map<String, List<State>> q0_edges = new HashMap<>();
         Map<String, List<State>> q1_edges = new HashMap<>();
@@ -47,7 +51,7 @@ public class test_6 {
         finals.add(st1);
         finals.add(st2);
 
-        NFA my_nfa = new NFA("my_nfa", graph, st0, finals);
+        NFA my_nfa = new NFA("my_nfa", alphabet, graph, st0, finals);
 
         System.out.println("does accept ''?");
         System.out.println(my_nfa.doesAcceptString("")); // false
