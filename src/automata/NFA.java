@@ -1,6 +1,7 @@
 package automata;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -96,6 +97,20 @@ public class NFA {
         }
 
         return union;
+    }
+
+    public Map<State, Map<String, List<State>>> get_all_delta_star() {
+
+        Map<State, Map<String, List<State>>> delta_star = new HashMap<>();
+
+        for (State item:this.graph.keySet()) {
+            Map<String, List<State>> edges = new HashMap<>();
+            for (String w:this.alphabet)
+                edges.put(w, nextState(item, w));
+            delta_star.put(item, edges);
+        }
+
+        return delta_star;
     }
 
     @Override
