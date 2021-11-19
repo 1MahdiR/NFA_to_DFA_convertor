@@ -1,5 +1,6 @@
 package automata;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -51,6 +52,29 @@ public class NFA {
     }
 
     public boolean doesAcceptString(String w) { return recursiveFunction(w, this.initialState); }
+
+    public List<State> nextState(State st, String w) {
+        List<State> states = new ArrayList<>();
+
+        if (!w.isEmpty()) {
+            if (this.graph.containsKey(st))
+                if (this.graph.get(st).containsKey(w))
+                    for (State item : this.graph.get(st).get(w)) {
+                        states.add(item);
+                        states.addAll(nextState(item, ""));
+                    }
+        }
+
+        if (this.graph.containsKey(st))
+            if (this.graph.get(st).containsKey("lambda"))
+                for (State item:this.graph.get(st).get("lambda")) {
+                    if (w.isEmpty())
+                        states.add(item);
+                    states.addAll(nextState(item, w));
+                }
+
+        return states;
+    }
 
     @Override
     public String toString() {
