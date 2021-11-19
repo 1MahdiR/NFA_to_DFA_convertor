@@ -77,17 +77,6 @@ public class NFA {
         return states;
     }
 
-    private boolean isGraphComplete(Map<State, Map<String, List<State>>> graph) {
-
-        for (State item:graph.keySet()) {
-            Map<String, List<State>> edges = graph.get(item);
-            if (edges.keySet().size() != this.alphabet.size())
-                return false;
-        }
-
-        return true;
-    }
-
     private List<State> unionStates(List<State> states, String w) {
 
         List<State> union = new ArrayList<>();
@@ -99,18 +88,109 @@ public class NFA {
         return union;
     }
 
-    public Map<State, Map<String, List<State>>> get_all_delta_star() {
+    private State CreateNewState(List<State> states) {
 
-        Map<State, Map<String, List<State>>> delta_star = new HashMap<>();
+        if (states.isEmpty())
+            return new State("empty_state");
 
-        for (State item:this.graph.keySet()) {
-            Map<String, List<State>> edges = new HashMap<>();
-            for (String w:this.alphabet)
-                edges.put(w, nextState(item, w));
-            delta_star.put(item, edges);
+        String state_name = "";
+        for (State item:states) {
+            state_name += item.getName() + "_";
         }
 
-        return delta_star;
+        return new State(state_name.substring(0,state_name.length()-1));
+    }
+
+    public DFA convertToDFA(){
+
+        Map<List<State>, Map<String, List<State>>> graph = new HashMap<>();
+
+        List<State> q0_state = new ArrayList<>();
+        q0_state.add(this.initialState);
+
+        Map<String, List<State>> q0_edges = new HashMap<>();
+        for (String w:this.alphabet) {
+            q0_edges.put(w, nextState(q0_state.get(0), w));
+        }
+
+        graph.put(q0_state, q0_edges);
+
+        boolean graphIsComplete = false;
+
+        while (!graphIsComplete) {
+            graphIsComplete = true;
+            Map<List<State>, Map<String, List<State>>> temp_graph = new HashMap<>();
+            for (List<State> item:graph.keySet()) {
+                Map<String, List<State>> edges = graph.get(item);
+                for (List<State> jtem:edges.values())
+                    if (!graph.containsKey(jtem)) {
+                        graphIsComplete = false;
+
+                        Map<String, List<State>> current_edges = new HashMap<>();
+                        for (String w:this.alphabet) {
+
+                            current_edges.put(w, unionStates(jtem, w));
+                        }
+
+                        temp_graph.put(jtem, current_edges);
+                    }
+            }
+
+            for (List<State> item:temp_graph.keySet()) {
+                graph.put(item, temp_graph.get(item));
+            }
+        }
+
+        Map<State, Map<String, State>> dfa_graph = new HashMap<>();
+        List<State> finals = new ArrayList<>();
+        Map<List<State>, State> mapper = new HashMap<>();
+
+        for (List<State> item:graph.keySet()) {
+
+            State st;
+            if (!mapper.containsKey(item)) {
+
+                st = CreateNewState(item);
+                for (State cst:item) {
+                    if (this.finalStates.contains(cst)) {
+                        finals.add(st);
+                        break;
+                    }
+                }
+                mapper.put(item, st);
+            } else {
+
+                st = mapper.get(item);
+                for (State cst:item) {
+                    if (this.finalStates.contains(cst)) {
+                        finals.add(st);
+                        break;
+                    }
+                }
+            }
+
+            Map<String, State> edges = new HashMap<>();
+
+            for (String w:graph.get(item).keySet()) {
+                List<State> states = graph.get(item).get(w);
+                if (!mapper.containsKey(states)) {
+                    State new_st = CreateNewState(states);
+                    mapper.put(states, new_st);
+                    edges.put(w, new_st);
+                } else {
+                    edges.put(w, mapper.get(states));
+                }
+            }
+            dfa_graph.put(st, edges);
+        }
+
+        State init_state = new State("");
+        for(State item:dfa_graph.keySet()) {
+            if (item.getName().equals(this.initialState.getName()))
+                init_state = item;
+        }
+
+        return new DFA(this.name + "_(DFA)", this.alphabet, dfa_graph, init_state, finals);
     }
 
     @Override
