@@ -76,6 +76,28 @@ public class NFA {
         return states;
     }
 
+    private boolean isGraphComplete(Map<State, Map<String, List<State>>> graph) {
+
+        for (State item:graph.keySet()) {
+            Map<String, List<State>> edges = graph.get(item);
+            if (edges.keySet().size() != this.alphabet.size())
+                return false;
+        }
+
+        return true;
+    }
+
+    private List<State> unionStates(List<State> states, String w) {
+
+        List<State> union = new ArrayList<>();
+        for (State item:states) {
+
+            union.addAll(nextState(item, w));
+        }
+
+        return union;
+    }
+
     @Override
     public String toString() {
 
