@@ -44,7 +44,7 @@ public class NFA {
             List<State> possible_states = currentState_edges.get("lambda");
 
             for (State item:possible_states) {
-                if (recursiveFunction(restOf_w, item))
+                if (recursiveFunction(w, item))
                     return true;
             }
         }
