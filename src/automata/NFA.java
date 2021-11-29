@@ -82,7 +82,10 @@ public class NFA {
         List<State> union = new ArrayList<>();
         for (State item:states) {
 
-            union.addAll(nextState(item, w));
+            for (State jtem:nextState(item, w)) {
+                if (!union.contains(jtem))
+                    union.add(jtem);
+            }
         }
 
         return union;
@@ -107,14 +110,20 @@ public class NFA {
 
         List<State> q0_state = new ArrayList<>();
         q0_state.add(this.initialState);
+        q0_state.addAll(nextState(this.initialState, "lambda"));
 
         Map<String, List<State>> q0_edges = new HashMap<>();
         for (String w:this.alphabet) {
-            q0_edges.put(w, nextState(q0_state.get(0), w));
+            q0_edges.put(w, unionStates(q0_state, w));
         }
+        String q0_state_name = "";
+        for (State item:q0_state) {
+            q0_state_name += item.getName();
+            q0_state_name += "_";
+        }
+        q0_state_name = q0_state_name.substring(0,q0_state_name.length()-1);
 
         graph.put(q0_state, q0_edges);
-
         boolean graphIsComplete = false;
 
         while (!graphIsComplete) {
@@ -185,8 +194,8 @@ public class NFA {
         }
 
         State init_state = new State("");
-        for(State item:dfa_graph.keySet()) {
-            if (item.getName().equals(this.initialState.getName()))
+        for (State item:dfa_graph.keySet()) {
+            if (item.getName().equals(q0_state_name))
                 init_state = item;
         }
 
