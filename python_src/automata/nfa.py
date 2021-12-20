@@ -43,4 +43,24 @@ class NFA:
     def doesAcceptString(self, w:str) -> bool:
         return self.recursiveFunction(w, self._initialState)
 
+    def nextState(self, st:State, w:str) -> list:
 
+        states = list()
+
+        if w:
+            if st in self._graph.keys():
+                if w in self._graph[st].keys():
+                    for item in self._graph[st][w]:
+                        states.append(item)
+                        for jtem in self.nextState(item, w[1:]):
+                            states.append(jtem)
+
+        if st in self._graph.keys():
+            if "lambda" in self._graph[st].keys():
+                for item in self._graph[st]["lambda"]:
+                    if not w:
+                        states.append(item)
+                    for jtem in self.nextState(item, w):
+                        states.append(jtem)
+
+        return list(set(states))
