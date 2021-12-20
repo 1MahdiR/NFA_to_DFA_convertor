@@ -1,5 +1,5 @@
 
-from state import State
+from automata.state import State
 
 class DFA:
 

@@ -1,6 +1,6 @@
 
-from state import State
-from dfa import DFA
+from automata.state import State
+from automata.dfa import DFA
 
 class NFA:
 
