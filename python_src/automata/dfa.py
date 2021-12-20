@@ -7,9 +7,9 @@ class DFA:
             graph:dict, initialState:State, finalStates:list):
         
         self._name = name
-        self._alphabet = alphabet
+        self._alphabet = frozenset(alphabet)
         self._graph = graph
-        self._finalStates = finalStates
+        self._finalStates = frozenset(finalStates)
         self._initialState = initialState
 
     def doesAcceptString(self, w:str) -> bool:
