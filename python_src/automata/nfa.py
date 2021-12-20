@@ -64,3 +64,24 @@ class NFA:
                         states.append(jtem)
 
         return list(set(states))
+
+    def unionStates(self, states:list, w:str) -> list:
+
+        union = list()
+        for item in states:
+            for jtem in self.nextState(item, w):
+                union.append(jtem)
+
+        return list(set(union))
+
+    def createNewState(states:list):
+        
+        if not states:
+            return State("empty_state")
+
+        state_name = "_".join([ x.getName() for x in states ])
+        
+        return State(state_name)
+
+
+
