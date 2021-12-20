@@ -74,7 +74,7 @@ class NFA:
 
         return list(set(union))
 
-    def createNewState(states:list):
+    def createNewState(self, states:list):
         
         if not states:
             return State("empty_state")
