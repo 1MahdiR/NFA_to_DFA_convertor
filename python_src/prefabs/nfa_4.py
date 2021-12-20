@@ -4,7 +4,7 @@
 from automata.state import State
 from automata.nfa import NFA
 
-name = "nfa_3"
+name = "nfa_4"
 alphabet = ["0", "1"]
 q0 = State("q0")
 q1 = State("q1")
