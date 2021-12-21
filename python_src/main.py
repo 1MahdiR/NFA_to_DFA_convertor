@@ -155,7 +155,8 @@ def create_new_nfa():
 
             if graph.get(q1_state):
                 if graph[q1_state].get(w):
-                    graph[q1_state][w].append(q2_state)
+                    if q2_state not in graph[q1_state][w]:
+                        graph[q1_state][w].append(q2_state)
                 else:
                     graph[q1_state][w] = [q2_state]
             else:
