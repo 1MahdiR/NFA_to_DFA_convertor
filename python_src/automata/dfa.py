@@ -3,10 +3,11 @@ from automata.state import State
 
 class DFA:
 
-    def __init__(self, name:str, alphabet:list,
+    def __init__(self, name:str, comment:str, alphabet:list,
             graph:dict, initialState:State, finalStates:list):
         
         self._name = name
+        self._comment = comment
         self._alphabet = frozenset(alphabet)
         self._graph = graph
         self._finalStates = frozenset(finalStates)
@@ -28,7 +29,7 @@ class DFA:
 
     def __str__(self):
 
-        return "DFA name: %s\n graph:\n %s\n initial state: %s\n final states:\n %s\n" % (self._name, self._graph, self._initialState, list(self._finalStates))
+        return "DFA name: %s\n comment: %s\n graph:\n %s\n initial state: %s\n final states:\n %s\n" % (self._name, self._comment, self._graph, self._initialState, list(self._finalStates))
 
     def __repr__(self):
 
