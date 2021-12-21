@@ -12,7 +12,7 @@ This is an interactive script that can create Non-deterministic Finite Automata 
 
 ## License
 
-[GPL-3.0 License](https://github.com/1MahdiR/Djungool/blob/master/LICENSE)
+[GPL-3.0 License](https://github.com/1MahdiR/NFA_to_DFA_convertor/blob/master/LICENSE)
 
 ---
 
