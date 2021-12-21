@@ -5,6 +5,7 @@ from automata.state import State
 from automata.nfa import NFA
 
 name = "nfa_5"
+comment = "(1((111)*+(000)*)1)+(0*(1+0))"
 alphabet = ["0", "1"]
 q0 = State("q0")
 q1 = State("q1")
@@ -23,5 +24,5 @@ graph = { q0 : { "lambda" : [ q1 , q2 ] } , q1 : { "1" : [ q3 , q7 ] } , q3 : { 
 initial = q0
 finals = [q6, q10, q11]
 
-nfa_5 = NFA(name, alphabet, graph, initial, finals)
+nfa_5 = NFA(name, comment, alphabet, graph, initial, finals)
 
