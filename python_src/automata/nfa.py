@@ -164,7 +164,7 @@ class NFA:
 
             dfa_graph[st] = edges
 
-        return DFA(self._name + "_(DFA)", self._alphabet, dfa_graph, q0_state_dfa, frozenset(finals))
+        return DFA(self._name + "_(DFA)", self._comment, self._alphabet, dfa_graph, q0_state_dfa, frozenset(finals))
     
     def __str__(self):
 
