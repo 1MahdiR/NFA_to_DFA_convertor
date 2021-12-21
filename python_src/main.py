@@ -19,14 +19,13 @@ def select_automata(automata):
     print("Automata name: {}".format(automata._name))
     print("1. Enter a string")
     print("2. Show definition of automata")
-    print("3. Show visualization of automata")
     if dfa_or_nfa == "NFA":
-        print("4. Convert to DFA")
-        print("5. Delete automata")
-        print("6. Exit\n")
-    else:
+        print("3. Convert to DFA")
         print("4. Delete automata")
         print("5. Exit\n")
+    else:
+        print("3. Delete automata")
+        print("4. Exit\n")
 
     while True:
         reply = input("> ")
@@ -42,9 +41,6 @@ def select_automata(automata):
             print()
 
         elif reply == "3":
-            pass
-
-        elif reply == "4":
             if type(automata) == DFA:
                 AUTOS.remove(automata)
                 return None
@@ -53,13 +49,13 @@ def select_automata(automata):
                 AUTOS.append(dfa)
                 print("\nAutomata {} has been created\n".format(dfa._name))
 
-        elif reply == "5":
+        elif reply == "4":
             if type(automata) == DFA:
                 return None
             else:
                 AUTOS.remove(automata)
                 return None
-        elif reply == "6":
+        elif reply == "5":
             if type(automata) != DFA:
                 return None
 
