@@ -8,9 +8,197 @@
 
 from automata.dfa import DFA
 from automata.nfa import NFA
+from automata.state import State
 
 AUTOS = list()
 
+def create_new_dfa():
+    name = ""
+    comment = ""
+    alphabet = list()
+    graph = dict()
+    initial = None
+    finals = list()
+    states = dict()
+
+    print("Enter the name of the dfa.")
+    while True:
+        reply = input("> ")
+        if reply.strip():
+            name = reply
+            break
+
+    print("Enter a comment for dfa (optional).")
+    comment = input("> ").strip()
+
+    print("Enter the alphabet of the dfa (seperate with spaces).")
+    while True:
+        reply = input("> ").strip().split()
+        alphabet = [ x for x in reply if x ]
+        if alphabet:
+            break
+        print("Error in input!")
+    
+    print("Enter the graph definition of the dfa ([source:w:destination]).")
+    while True:
+        reply = input("> ")
+        if not reply and graph:
+            break
+        reply = reply.strip().split(":")
+        if len(reply) == 3 and all(reply) and len(reply[1]) == 1:
+            w = reply[1]
+            if w not in alphabet:
+                print("Error in input!")
+                continue
+            q1 = reply[0]
+            q2 = reply[2]
+
+            q1_state = None
+            q2_state = None
+
+            if not states.get(q1):
+                q1_state = State(q1)
+                states[q1] = q1_state
+            else:
+                q1_state = states[q1]
+
+            if not states.get(q2):
+                q2_state = State(q2)
+                states[q2] = q2_state
+            else:
+                q2_state = states[q2]
+
+            if graph.get(q1_state):
+                graph[q1_state][w] = q2_state
+            else:
+                graph[q1_state] = dict()
+                graph[q1_state][w] = q2_state
+    
+    print("What is the initial state of dfa?")
+    while True:
+        reply = input("> ").strip()
+        if states.get(reply):
+            initial = states[reply]
+            break
+
+    print("What are the final states of dfa (seperate with spaces)?")
+    while True:
+        reply = input("> ").strip().split()
+
+        for item in reply:
+            if states.get(item):
+                finals.append(states[item])
+            else:
+                continue
+        break
+
+    dfa = DFA(name, comment, alphabet, graph, initial, finals)
+    AUTOS.append(dfa)
+
+    print("dfa {} has been successfully created.".format(dfa._name))
+
+def create_new_nfa():
+    name = ""
+    comment = ""
+    alphabet = list()
+    graph = dict()
+    initial = None
+    finals = list()
+    states = dict()
+
+    print("Enter the name of the nfa.")
+    while True:
+        reply = input("> ")
+        if reply.strip():
+            name = reply
+            break
+
+    print("Enter a comment for nfa (optional).")
+    comment = input("> ").strip()
+
+    print("Enter the alphabet of the nfa (seperate with spaces).")
+    while True:
+        reply = input("> ").strip().split()
+        alphabet = [ x for x in reply if x ]
+        if alphabet:
+            break
+        print("Error in input!")
+    
+    print("Enter the graph definition of the nfa ([source:w:destination]).")
+    while True:
+        reply = input("> ")
+        if not reply and graph:
+            break
+        reply = reply.strip().split(":")
+        if len(reply) == 3 and all(reply) and (len(reply[1]) == 1 or reply[1] == "lambda"):
+            w = reply[1].strip()
+            if w not in alphabet and  w != "lambda":
+                print("Error in input!")
+                continue
+            q1 = reply[0]
+            q2 = reply[2]
+
+            q1_state = None
+            q2_state = None
+
+            if not states.get(q1):
+                q1_state = State(q1)
+                states[q1] = q1_state
+            else:
+                q1_state = states[q1]
+
+            if not states.get(q2):
+                q2_state = State(q2)
+                states[q2] = q2_state
+            else:
+                q2_state = states[q2]
+
+            if graph.get(q1_state):
+                if graph[q1_state].get(w):
+                    graph[q1_state][w].append(q2_state)
+                else:
+                    graph[q1_state][w] = [q2_state]
+            else:
+                graph[q1_state] = dict()
+                graph[q1_state][w] = [q2_state]
+    
+    print("What is the initial state of nfa?")
+    while True:
+        reply = input("> ").strip()
+        if states.get(reply):
+            initial = states[reply]
+            break
+
+    print("What are the final states of nfa (seperate with spaces)?")
+    while True:
+        reply = input("> ").strip().split()
+
+        for item in reply:
+            if states.get(item):
+                finals.append(states[item])
+            else:
+                continue
+        break
+
+    nfa = NFA(name, comment, alphabet, graph, initial, finals)
+    AUTOS.append(nfa)
+
+    print("nfa {} has been successfully created.".format(nfa._name))
+
+def select_automata(automata):
+
+    dfa_or_nfa = "DFA" if type(automata) == DFA else "NFA"
+    print("\n        Automata ({})".format(dfa_or_nfa))
+    print("------------------------------")
+    print("Automata name: {}".format(automata._name))
+    print("1. Enter a string")
+    print("2. Show definition of automata")
+    if dfa_or_nfa == "NFA":
+        print("3. Convert to DFA")
+        print("4. Delete automata")
+        print("5. Exit\n")
+    else:
+        print("3. Delete automata")
 def select_automata(automata):
 
     dfa_or_nfa = "DFA" if type(automata) == DFA else "NFA"
@@ -128,23 +316,27 @@ def main():
     
     valid_inputs = ["1", "2", "3", "4", "5"]
 
-    while True:
+    try:
+        while True:
 
-        main_menu()
-        reply = input("> ")
-        if reply in valid_inputs:
-            if reply == "1":
-                pass
-            elif reply == "2":
-                pass
-            elif reply == "3":
-                load_automata()
-            elif reply == "4":
-                load_prefabs()
+            main_menu()
+            reply = input("> ")
+            if reply in valid_inputs:
+                if reply == "1":
+                    create_new_dfa()
+                elif reply == "2":
+                    create_new_nfa()
+                elif reply == "3":
+                    load_automata()
+                elif reply == "4":
+                    load_prefabs()
+                else:
+                    break
             else:
-                break
-        else:
-            pass
+                pass
+    
+    except KeyboardInterrupt:
+        pass
 
 
 if __name__ == '__main__':
