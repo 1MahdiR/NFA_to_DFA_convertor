@@ -151,7 +151,7 @@ class NFA:
                         finals.append(st)
                         break
 
-            edges = dict() # Initiate edges for 'item' ( { letter_1 : [ node_i, ... ], ... } )
+            edges = dict() # Initiate edges for 'item' ( { letter_1 : node_i, ... } )
 
             for i in graph[item].keys():
 
