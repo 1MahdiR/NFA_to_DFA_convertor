@@ -9,7 +9,7 @@ class DFA:
         self._name = name
         self._comment = comment # Comments could be used as a way to describe the language for convinience
         self._alphabet = frozenset(alphabet)
-        self._graph = graph
+        self._graph = graph # graph = { node_1: { letter_1 : node_i, ... }, ...  }
         self._finalStates = frozenset(finalStates)
         self._initialState = initialState
 
