@@ -74,6 +74,9 @@ def create_new_dfa():
                 graph[q1_state] = dict()
                 graph[q1_state][w] = q2_state
     
+            if not graph.get(q2_state):
+                 graph[q2_state] = dict()
+
     print("What is the initial state of dfa?")
     while True:
         reply = input("> ").strip()
@@ -162,6 +165,9 @@ def create_new_nfa():
             else:
                 graph[q1_state] = dict()
                 graph[q1_state][w] = [q2_state]
+            
+            if not graph.get(q2_state):
+                 graph[q2_state] = dict()
     
     print("What is the initial state of nfa?")
     while True:
