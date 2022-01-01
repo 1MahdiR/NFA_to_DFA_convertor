@@ -169,7 +169,7 @@ class NFA:
 
     def __str__(self): # A way to show the nfa for convinience
 
-        return "DFA name: %s\n comment: %s\n graph:\n %s\n initial state: %s\n final states:\n %s\n" % (self._name, self._comment, self._graph, self._initialState, list(self._finalStates))
+        return "NFA name: %s\n comment: %s\n graph:\n %s\n initial state: %s\n final states:\n %s\n" % (self._name, self._comment, self._graph, self._initialState, list(self._finalStates))
 
     def __repr__(self):
 
