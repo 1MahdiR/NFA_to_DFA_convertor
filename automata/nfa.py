@@ -31,7 +31,7 @@ class NFA:
                 if self.recursiveFunction(restOf_w, item): # For every state call this function recursively
                     return True
 
-        elif "lambda" in currentState_edges.keys(): # If there was no edge with letter 'target_edge',
+        if "lambda" in currentState_edges.keys(): # If there was no edge with letter 'target_edge',
             # find transitions with 'lambda'
 
             possible_states = currentState_edges["lambda"]
