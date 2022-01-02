@@ -206,20 +206,6 @@ def select_automata(automata):
         print("5. Exit\n")
     else:
         print("3. Delete automata")
-def select_automata(automata):
-
-    dfa_or_nfa = "DFA" if type(automata) == DFA else "NFA"
-    print("\n        Automata ({})".format(dfa_or_nfa))
-    print("------------------------------")
-    print("Automata name: {}".format(automata._name))
-    print("1. Enter a string")
-    print("2. Show definition of automata")
-    if dfa_or_nfa == "NFA":
-        print("3. Convert to DFA")
-        print("4. Delete automata")
-        print("5. Exit\n")
-    else:
-        print("3. Delete automata")
         print("4. Exit\n")
 
     while True:
